@@ -74,7 +74,7 @@ def get_entity_rel_path(graph, source, target):
             r_list.append(graph.get_edge_data(entity_list[i-1],entity_list[i])[j]['r'])
         relation_list.append(r_list)
 
-    # TODO: max length
+    # max length
     # relation_list = [l for l in relation_list if len(l)<4]
     return entity_list, relation_list, len(relation_list)
 
@@ -92,22 +92,7 @@ def rule_single(instance, instance2rel, instance2entity_list, ent_q, ans_e):
     if len(index_list) > 0:
         return [rel_rule], index_list
     return [], []
-'''
-def rule_single(data, ent_q, ans_e):
-    index_list = []
-    for e in data[1:]:
-        if e != ans_e:
-            if e in ent_q:
-                index_list.append(ent_q.index(e))
-            else:
-                index_list.append('pass')
-        else:
-            index_list.append('MASK')
-    if len(index_list) > 0:
-        return [data[0]], index_list
-    return [], []
-'''
-# TODO
+
 def rule_multi(instance2rel, instance2entity_list, rule_list, e_list, ent_q):
     # rule_list: [['make/750/1/0'], ['model/4558/2/0']]
     # e_list: ['m.01d9cv', 'm.04hx4n', 'm.03vnt4']
@@ -438,10 +423,6 @@ def process_whole(dataset):
     print('{}: {}'.format(dataset, acc))
 
 
-#process_whole('FB-AUTO')
-#process_whole('M-FB15K')
-
-# datasets: M-FB15K, FB-AUTO
 dataset = sys.argv[1]
 N = int(sys.argv[2])
 print(dataset)

@@ -1,8 +1,3 @@
-# for datasets FB-AUTO, M-FB15K
-# original data format: (r, e1, e2, e3)
-# processed graph.txt format: (e2, r/XX/1/0, e1)(XX is the instance id), (e3, r_0, e1), (e1, r_1, e2), (e3, r_1, e2), (e1, r_2, e3), (e2, r_2, e3)
-# processed query format: (r, e1, e2, e3) 
-
 import os
 import shutil
 import sys
@@ -34,38 +29,6 @@ def get_graph_file(dataset_name, original_file_path, processed_folder_path):
                     for j,e2 in enumerate(entities):
                         if i != j:
                             new_data.append([e2, rel+'/'+str(index)+'/'+str(j)+'/'+str(i), e1])
-    '''
-    elif dataset_name in ['WikiPeople_minus', 'WikiPeople']:
-        with open(original_file_path, 'rb') as f:
-            data_all = pickle.load(f)
-            for index, data in enumerate(data_all):
-                data_reverse = {v:k for k,v in data.items()}
-                rel = data['rel']
-                entities = list(data.values())
-                entities.remove(rel)
-
-                for i,e1 in enumerate(entities):
-                    for j,e2 in enumerate(entities):
-                        if i != j:
-                            new_data.append([e2, rel+'/'+str(index)+'/'+data_reverse[e2]+'/'+data_reverse[e1], e1])
-
-    elif dataset_name in ['WD50K', 'WD50K_33', 'WD50K_66', 'WD50K_100']:
-        with open(original_file_path) as f:
-            for index, line in enumerate(f.readlines()):
-                data = line.strip().split(',')
-                rel = data[1]
-                entities = [data[j] for j in range(len(data)) if j%2==0]
-                for i,e1 in enumerate(entities):
-                    for j,e2 in enumerate(entities):
-                        if i != j:
-                            if i == 0: key_i = '{}_h'.format(rel)
-                            elif i == 1: key_i = '{}_t'.format(rel)
-                            else: key_i = data[(i+1)*2-3]
-                            if j == 0: key_j = '{}_h'.format(rel)
-                            elif j == 1: key_j = '{}_t'.format(rel)
-                            else: key_j = data[(j+1)*2-3]
-                            new_data.append([e2, rel+'/'+str(index)+'/'+key_j+'/'+key_i, e1])
-    '''
 
     new_data = [list(j) for j in list(set([tuple(i) for i in new_data]))] # remove duplicates
 
@@ -93,40 +56,9 @@ def get_pickle_file(dataset_name, original_file_path, processed_folder_path):
                 data = line.strip().split(' ')
                 all_edge.append(data[0])
                 all_data.append(data)
-    '''
-    elif dataset_name in ['WD50K', 'WD50K_33', 'WD50K_66', 'WD50K_100']:
-        with open(original_file_path) as f:
-            for line in f.readlines():
-                data = line.strip().split(',')
-                all_edge.append(data[1])
-                all_data.append(data)
-    '''
+    
     all_name = ['instance'+str(i) for i in range(len(all_data))]
-    '''
-    if not dataset_name in ['WD50K', 'WD50K_33', 'WD50K_66', 'WD50K_100']:
-        for i in range(len(all_data)):
-            rel = all_data[i][0]
-            entities = all_data[i][1:]
-            name = all_name[i]
-            if name not in instance2entity: instance2entity[name] = []
-            for e in entities:
-                if e not in entity2instance: entity2instance[e] = set()
-                entity2instance[e].add(name)
-                instance2entity[name].append(e)
-            instance2rel[name] = rel
-    else:
-        for i in range(len(all_data)):
-            rel = all_data[i][1]
-            entities = [all_data[i][j] for j in range(len(all_data[i])) if j%2==0]
-            name = all_name[i]
-            if name not in instance2entity: instance2entity[name] = []
-            for e in entities:
-                if e not in entity2instance: entity2instance[e] = set()
-                entity2instance[e].add(name)
-                instance2entity[name].append(e)
-            instance2rel[name] = rel
-    '''
-
+    
     for i in range(len(all_data)):
         rel = all_data[i][0]
         entities = all_data[i][1:]
@@ -255,24 +187,6 @@ def process_json_file2(original_path, processed_path):
     with open(processed_path, 'w') as fw:
         for d in new_data:
             fw.write('\t'.join(d) + '\n')
-
-'''
-def process_test_file(original_file_path, processed_file_path):
-    new_data = []
-    with open(original_file_path) as f:
-        for line in f.readlines():
-            data = line.strip().split('\t')
-            rel = data[0]
-            entities = data[1:]
-            e1 = entities[0]
-            for j,e2 in enumerate(entities):
-                if j != 0:
-                    new_data.append([e1, rel+'0'+str(j), e2])
-
-    with open(processed_file_path, 'w') as fw:
-        for new_d in new_data:
-            fw.write('\t'.join(new_d) + '\n')
-'''
 
 def process_test_file(original_file, processed_file):
     new_data = []

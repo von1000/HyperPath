@@ -1,9 +1,3 @@
-# for datasets FB-AUTO, M-FB15K
-# original data format: (r, e1, e2, e3)
-# processed graph.txt format: (e2, r_0, e1), (e3, r_0, e1), (e1, r_1, e2), (e3, r_1, e2), (e1, r_2, e3), (e2, r_2, e3)
-# processed edge_graph.txt format: (r, r_1_r2_3, r2), r and r2 intersect at entity, which locates 1 at r and locates 3 at r2
-# processed query format: (r, e1, e2, e3) 
-
 import os
 import shutil
 import sys
@@ -178,52 +172,6 @@ def get_line_graph_file(original_file_path, processed_folder_path):
     with open(os.path.join(processed_folder_path, 'instance2rel.pkl'), 'wb') as fw:
         pickle.dump(instance2rel, fw)
 
-    '''
-    line_graph = []
-    for i in range(len(all_data)):
-        si = set(all_data[i][1:])
-        for j in range(len(all_data)):
-            if i != j:
-                sj = set(all_data[j][1:])
-                inter = si.intersection(sj)
-                for element in inter:
-                    if all_edge[i] != all_edge[j]:
-                        index_i = all_data[i][1:].index(element)
-                        index_j = all_data[j][1:].index(element)
-                        edge = all_edge[i] + '/' + str(index_i) + '/' + all_edge[j] + '/' + str(index_j) 
-                        line_graph.append([all_name[i], edge, all_name[j]])
-
-    line_graph = [list(j) for j in list(set([tuple(i) for i in line_graph]))] # remove duplicates
-
-    with open(os.path.join(processed_folder_path, 'line_graph.txt'), 'w') as fw:
-        for new_d in line_graph:
-            fw.write('\t'.join(new_d) + '\n')
-    '''
-    '''
-    filtered_data = filter_data(new_data, original_file_path)
-
-    with open(os.path.join(processed_folder_path, 'graph_train.txt'), 'w') as fw:
-        for new_d in filtered_data:
-            fw.write('\t'.join(new_d) + '\n')
-    '''
-
-'''
-def process_test_file(original_file_path, processed_file_path):
-    new_data = []
-    with open(original_file_path) as f:
-        for line in f.readlines():
-            data = line.strip().split('\t')
-            rel = data[0]
-            entities = data[1:]
-            e1 = entities[0]
-            for j,e2 in enumerate(entities):
-                if j != 0:
-                    new_data.append([e1, rel+'0'+str(j), e2])
-
-    with open(processed_file_path, 'w') as fw:
-        for new_d in new_data:
-            fw.write('\t'.join(new_d) + '\n')
-'''
 
 def process_test_file(original_file, processed_file):
     new_data = []

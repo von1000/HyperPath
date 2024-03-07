@@ -1,4 +1,3 @@
-# usage: python eval.py M-FB15K
 import networkx as nx
 import numpy as np
 import os
@@ -126,7 +125,7 @@ def get_hits_ranks(datafolder_path, option):
     print('MRR: {}'.format(mrr))
     return hits, mrr
 
-# datasets: M-FB15K, FB-AUTO
+
 dataset = sys.argv[1]
 print(dataset)
 datafolder_path = './data_preprocessed/{}'.format(dataset)

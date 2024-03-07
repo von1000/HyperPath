@@ -72,7 +72,7 @@ def get_entity_rel_path(graph, source, target):
             r_list.append(graph.get_edge_data(entity_list[i-1],entity_list[i])[j]['r'])
         relation_list.append(r_list)
 
-    # TODO: max length
+    # max length
     # relation_list = [l for l in relation_list if len(l)<4]
     return entity_list, relation_list, len(relation_list)
 
@@ -101,13 +101,10 @@ def get_rules_dict_jf(train_data, graph_e_dict, entity2instance, instance2entity
             q_ent_set = set(q_ent)
             for data_j_list in graph_e_dict[ans_e]:
                 j, data_j_list = data_j_list[0], data_j_list[1]
-                #data_j = '\t'.join(data_j_list)
-                #if data_j != '\t'.join(data):
                 if line_id != j:
                     inter_set = q_ent_set.intersection(set(data_j_list))
                     if len(inter_set) > 0:
                         rule_list, index_list = rule_single(data_j_list, entities, ans_e)
-                        #rule_list, index_list = rule_single('instance{}'.format(j), instance2rel, instance2entity_list, entities, ans_e)
                         if len(rule_list) > 0:
                             if query not in rules_dict:
                                 rules_dict[query] = []
@@ -134,7 +131,6 @@ def get_rules_dict_wd(train_data, graph_e_dict, entity2instance, instance2entity
                     inter_set = q_ent_set.intersection(set(data_j))
                     if len(inter_set) > 0:
                         rule_list, index_list = rule_single(data_j_list[1:], entities, ans_e)
-                        #rule_list, index_list = rule_single('instance{}'.format(j), instance2rel, instance2entity_list, entities, ans_e)
                         if len(rule_list) > 0:
                             if query not in rules_dict:
                                 rules_dict[query] = []
@@ -399,10 +395,6 @@ def process_whole(dataset):
     print('{}: {}'.format(dataset, acc))
 
 
-#process_whole('FB-AUTO')
-#process_whole('M-FB15K')
-
-# datasets: M-FB15K, FB-AUTO
 dataset = sys.argv[1]
 print(dataset)
 process_whole(dataset)

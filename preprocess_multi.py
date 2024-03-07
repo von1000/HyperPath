@@ -1,8 +1,3 @@
-# for datasets FB-AUTO, M-FB15K
-# original data format: (r, e1, e2, e3)
-# processed graph.txt format: (e2, r/XX/1/0, e1)(XX is the instance id), (e3, r_0, e1), (e1, r_1, e2), (e3, r_1, e2), (e1, r_2, e3), (e2, r_2, e3)
-# processed query format: (r, e1, e2, e3) 
-
 import os
 import shutil
 import sys
@@ -109,24 +104,6 @@ def get_pickle_file(dataset_name, original_file_path, processed_folder_path):
     with open(os.path.join(processed_folder_path, 'instance2rel.pkl'), 'wb') as fw:
         pickle.dump(instance2rel, fw)
 
-
-'''
-def process_test_file(original_file_path, processed_file_path):
-    new_data = []
-    with open(original_file_path) as f:
-        for line in f.readlines():
-            data = line.strip().split('\t')
-            rel = data[0]
-            entities = data[1:]
-            e1 = entities[0]
-            for j,e2 in enumerate(entities):
-                if j != 0:
-                    new_data.append([e1, rel+'0'+str(j), e2])
-
-    with open(processed_file_path, 'w') as fw:
-        for new_d in new_data:
-            fw.write('\t'.join(new_d) + '\n')
-'''
 
 def process_test_file(original_file, processed_file):
     new_data = []
