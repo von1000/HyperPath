@@ -1,7 +1,7 @@
 # HyperPath
 Code for paper "Symbolic Knowledge Reasoning on Hyper-Relational Knowledge Graphs"
 
-Datasets: Please find the original datasets in the "data_original" folder.
+Datasets: Please place the original datasets in the "data_original" folder.
 
 For single-hop reasoning on datasets with only one main relation
 (on datasets JF17K, JF17K-3, JF17K-4, WikiPeople-3, WikiPeople-4, FB-AUTO, M-FB15K):
