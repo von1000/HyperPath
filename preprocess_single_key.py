@@ -4,9 +4,6 @@ import sys
 import pickle
 import json
 
-def filter_data(data, train_path):
-    pass
-
 def get_graph_file(dataset_name, original_file_path, processed_folder_path):
     new_data = []
     if dataset_name in ['M-FB15K', 'FB-AUTO', 'JF17K-4', 'JF17K', 'WikiPeople-4', 'WD50K_100', 'WD50K_66', 'WD50K_33', 'WD50K', 'WikiPeople', 'WikiPeople_minus']:

@@ -255,8 +255,6 @@ def reason_single_tail_list(query_e, rules_list, rules_dict, graph_r_dict):
                 try:
                     query.append(query_e[i])
                 except:
-                    pdb.set_trace()
-                    # quries of different lengths may correspond to the same relation in WD50K # TODO
                     flag = True
                     break
         # query_e: ['None', 'm.0j6lyq1', 'm.064v_vt', 'm.0mzmdqk', 'm.02wwn3']
@@ -370,21 +368,17 @@ def process_whole(dataset):
     entity2instance_path = 'entity2instance.pkl'
     instance2entity_list_path = 'instance2entity.pkl'
     instance2rel_path = 'instance2rel.pkl'
-    #line_graph_path = 'line_graph.txt'
 
     rule_folder_path = './rules/{}/'.format(dataset)
     if not os.path.isdir(rule_folder_path):
         os.makedirs(rule_folder_path)
-    #rule_list_path = 'rule_list.pickle'
-    #rule_dict_path = 'rule_dict.pickle'
    
     entity2instance = read_pickle(os.path.join(datafolder, entity2instance_path))
     instance2entity_list = read_pickle(os.path.join(datafolder, instance2entity_list_path))
     instance2rel = read_pickle(os.path.join(datafolder, instance2rel_path))
     train_data, graph_e_dict, graph_r_dict = get_graph_dict(os.path.join(datafolder, train_path))
-    #graph, h_r_t_dict = construct_graph(os.path.join(datafolder, graph_path))
-    #line_graph, line_h_r_dict = construct_graph(os.path.join(datafolder, line_graph_path))
-    if dataset in ['FB-AUTO', 'FB-AUTO_filter2', 'JF17K', 'JF17K_new', 'JF17K_filter', 'JF17K_filter2', 'JF17K-3', 'JF17K-4', 'JF17K-2', 'JF17K-5', 'JF17K-6', 'FB-AUTO-2', 'FB-AUTO-4', 'FB-AUTO-5', 'M-FB15K', 'WikiPeople-3', 'WikiPeople-4', 'WD50K_100-3', 'WD50K_100-4', 'WD50K_100-5', 'WD50K_100-6']:
+
+    if dataset in ['FB-AUTO', 'JF17K', 'JF17K_filter', 'JF17K-3', 'JF17K-4', 'JF17K-2', 'JF17K-5', 'JF17K-6', 'FB-AUTO-2', 'FB-AUTO-4', 'FB-AUTO-5', 'M-FB15K', 'WikiPeople-3', 'WikiPeople-4', 'WD50K_100-3', 'WD50K_100-4', 'WD50K_100-5', 'WD50K_100-6']:
         rules_dict = get_rules_dict_jf(train_data, graph_e_dict, entity2instance, instance2entity_list, instance2rel)
         rules_list_dict, rules_dict_dict = aggregate_rules_dict(rules_dict, rule_folder_path)
         acc = reason_tail_whole_jf(os.path.join(datafolder, test_path), rules_list_dict, rules_dict_dict, datafolder, graph_r_dict)

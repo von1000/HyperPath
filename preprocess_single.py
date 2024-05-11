@@ -236,7 +236,7 @@ def process_folder(dataset_name):
         process_test_file(os.path.join(original_folder, 'test.txt'), os.path.join(processed_folder, 'test.txt'))
         get_graph_file(os.path.join(processed_folder, 'train.txt'), processed_folder)
         get_line_graph_file(os.path.join(processed_folder, 'train.txt'), processed_folder)
-    elif dataset_name in ['JF17K_filter', 'JF17K_filter2', 'FB-AUTO_filter2']:
+    elif dataset_name in ['JF17K_filter']:
         # should run filter_jf.py first
         processed_folder = './data_preprocessed/{}'.format(dataset_name)
         get_graph_file(os.path.join(processed_folder, 'train.txt'), processed_folder)
@@ -261,15 +261,6 @@ def process_folder(dataset_name):
         process_wd_file(os.path.join(original_folder, 'test.txt'), os.path.join(processed_folder, 'test.txt'))
         get_graph_file(os.path.join(processed_folder, 'train.txt'), processed_folder)
         get_line_graph_file_wd(os.path.join(original_folder, 'train.txt'), processed_folder)
-    elif dataset_name in ['JF17K_new']:
-        original_folder = './data_original/{}'.format(dataset_name)
-        processed_folder = './data_preprocessed/{}'.format(dataset_name)
-        if not os.path.isdir(processed_folder):
-            os.makedirs(processed_folder)
-        process_file2(os.path.join(original_folder, 'train.txt'), os.path.join(processed_folder, 'train.txt'))
-        process_file2(os.path.join(original_folder, 'test.txt'), os.path.join(processed_folder, 'test.txt'))
-        get_graph_file(os.path.join(processed_folder, 'train.txt'), processed_folder)
-        get_line_graph_file(os.path.join(processed_folder, 'train.txt'), processed_folder)
 
 
 

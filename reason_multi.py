@@ -141,7 +141,6 @@ def get_rules_dict_jf(train_data, graph, graph_e_dict, entity2instance, instance
             #if 1:
             if not flag:
                 # multi-step
-                # TODO: remove all outgoing edges from start_e in instance line_id
                 for s_i, s_e in enumerate(entities):
                     for e_i, e_e in enumerate(entities):
                         if s_i != e_i:
@@ -403,20 +402,16 @@ def process_whole(dataset):
     entity2instance_path = 'entity2instance.pkl'
     instance2entity_list_path = 'instance2entity.pkl'
     instance2rel_path = 'instance2rel.pkl'
-    #line_graph_path = 'line_graph.txt'
 
     rule_folder_path = './rules/{}/'.format(dataset)
     if not os.path.isdir(rule_folder_path):
         os.makedirs(rule_folder_path)
-    #rule_list_path = 'rule_list.pickle'
-    #rule_dict_path = 'rule_dict.pickle'
 
     entity2instance = read_pickle(os.path.join(datafolder, entity2instance_path))
     instance2entity_list = read_pickle(os.path.join(datafolder, instance2entity_list_path))
     instance2rel = read_pickle(os.path.join(datafolder, instance2rel_path))
     train_data, graph_e_dict, graph_r_dict = get_graph_dict(os.path.join(datafolder, train_path))
     graph, _ = construct_graph(os.path.join(datafolder, graph_path))
-    #line_graph, line_h_r_dict = construct_graph(os.path.join(datafolder, line_graph_path))
     rules_dict = get_rules_dict_jf(train_data, graph, graph_e_dict, entity2instance, instance2entity_list, instance2rel)
     rules_list_dict, rules_dict_dict = aggregate_rules_dict(rules_dict, rule_folder_path)
     acc = reason_tail_whole_jf(os.path.join(datafolder, test_path), rules_list_dict, rules_dict_dict, datafolder, graph_r_dict)

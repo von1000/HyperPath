@@ -176,15 +176,8 @@ def process_folder(dataset_name):
         process_wiki2_txt(os.path.join(original_folder, 'test.txt'), os.path.join(processed_folder, 'test.txt'))
         get_graph_file(dataset_name, os.path.join(processed_folder, 'train.txt'), processed_folder)
         get_pickle_file(dataset_name, os.path.join(processed_folder, 'train.txt'), processed_folder)
-    elif dataset_name in ['JF17K_new']:
-        original_folder = '../hkg_logic2/data_preprocessed/{}'.format(dataset_name)
-        processed_folder = './data_preprocessed/{}'.format(dataset_name)
-        if not os.path.isdir(processed_folder):
-            os.makedirs(processed_folder)
-        get_graph_file(dataset_name, os.path.join(original_folder, 'train.txt'), processed_folder)
-        shutil.copyfile(os.path.join(original_folder, 'train.txt'), os.path.join(processed_folder, 'train.txt'))
-        shutil.copyfile(os.path.join(original_folder, 'test.txt'), os.path.join(processed_folder, 'test.txt'))
     elif dataset_name in ['JF17K-2', 'JF17K-5', 'JF17K-6', 'FB-AUTO-2', 'FB-AUTO-4', 'FB-AUTO-5', 'WD50K_100-3', 'WD50K_100-4', 'WD50K_100-5', 'WD50K_100-6']:
+        # these datasets need to be constructed based on the original dataset
         original_folder = './data_preprocessed/{}'.format(dataset_name)
         processed_folder = './data_preprocessed/{}'.format(dataset_name)
         get_graph_file(dataset_name, os.path.join(original_folder, 'train.txt'), processed_folder)
